@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Introduction to rebib</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to rebib</h1>
+
+
+
+<p>rebib is a spun-off package from <a href="https://github.com/Abhi-1U/texor">texor</a>.</p>
+<p>The decision to do this is the fact that the bibliography section in
+texor package was expanding significantly, enough to deserve a dedicated
+space.</p>
+<p>Thus rebib was born and has improved over the past few months to
+include more advanced features and utilities.</p>
+<div id="what-does-rebib-do" class="section level2">
+<h2>What does rebib do?</h2>
+<p>In LaTeX, we have multiple ways to declare bibliography entries,
+which include embedding bibliography entries in the document itself or
+isolating that section to an external file commonly called a bbl file.
+Then we have the BibTeX format, which has its structure and is much
+superior in managing bibliographic entries.</p>
+<p>LaTeX has no problem dealing with multiple formats and works well
+with all these bibliographic formats. However, some web publishing
+journals like RJ web articles from RJournal do not support embedded
+bibliographies. As a result, they need a BibTeX equivalent of the
+same.</p>
+<p>The rebib package converts embedded LaTeX bibliographies into a close
+BibTeX equivalent. This package eases the author from the manual
+conversion of the documents and aids the texor project in automating the
+conversion of past RJournal articles to the RJ-web-article format.</p>
+</div>
+<div id="features-of-rebib" class="section level2">
+<h2>features of rebib</h2>
+<ul>
+<li>Reads bib chunks to produce a very close BibTeX equivalent</li>
+<li>Title and author are usually mandatory fields</li>
+<li>URL, ISBN, publisher, pages and year are optional fields and will be
+enabled when relevant</li>
+<li>Rest of the data is stored in <code>&quot;journal&quot;</code>(internally) and
+<code>&quot;publisher&quot;</code>(when writing BibTeX file)</li>
+<li>Ignores commented LaTeX code</li>
+<li>Citation tracker</li>
+<li>Logging of events</li>
+<li>Bibliography Aggregation</li>
+</ul>
+<p>This mindmap summarizes the feature set beautifully:</p>
+<div class="figure" style="text-align: center">
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyNTlweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjU2OXB4O2hlaWdodDoyNTlweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NjkgMjU5IiB3aWR0aD0iNTY5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48cmVjdCBoZWlnaHQ9IjExLjY0MDYiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDAwO3N0cm9rZS13aWR0aDoxLjA7ZmlsbDpub25lOyIgd2lkdGg9IjMiIHg9IjQ1MyIgeT0iMTAiLz48dGV4dCBmaWxsPSIjODg4ODg4IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzIiB4PSI0NTMiIHk9IjE5LjI4MjIiPsKgPC90ZXh0PjxyZWN0IGZpbGw9IiM5MEVFOTAiIGhlaWdodD0iMzYuMjk2OSIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSI2MyIgeD0iMTk3IiB5PSIxMTcuMDg1OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM5IiB4PSIyMDciIHk9IjE0MC4wODExIj5yZWJpYjwvdGV4dD48cmVjdCBmaWxsPSIjMDBGRkZGIiBoZWlnaHQ9IjUyLjU5MzgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ3IiB4PSIzMTAiIHk9IjgwLjc4OTEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNzMiIHg9IjMyNCIgeT0iMTAzLjc4NDIiPkVtYmVkZGVkIEJpYmxpb2dyYXBoeTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMTkiIHg9IjMyOCIgeT0iMTIwLjA4MTEiPmNvbnZlcnNpb24gdXNpbmcgaW5idWlsdCBwYXJzZXI8L3RleHQ+PHBhdGggZD0iTTI2MCwxMzUuMjM0NCBMMjcwLDEzNS4yMzQ0IEMyODUsMTM1LjIzNDQgMjg1LDEwNy4wODU5IDMwMCwxMDcuMDg1OSBMMzEwLDEwNy4wODU5ICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHJlY3QgZmlsbD0iIzAwRkZGRiIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIxMiIgeD0iMzEwIiB5PSIxNTMuMzgyOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE5MiIgeD0iMzIwIiB5PSIxNzYuMzc3OSI+QWdncmVnYXRlZCBCaWJsaW9ncmFwaGllczwvdGV4dD48cGF0aCBkPSJNMjYwLDEzNS4yMzQ0IEwyNzAsMTM1LjIzNDQgQzI4NSwxMzUuMjM0NCAyODUsMTcxLjUzMTMgMzAwLDE3MS41MzEzIEwzMTAsMTcxLjUzMTMgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cmVjdCBmaWxsPSIjMDBGRkZGIiBoZWlnaHQ9IjM2LjI5NjkiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMTI3IiB4PSIyMCIgeT0iMzIuNjQwNiIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwNyIgeD0iMzAiIHk9IjU1LjYzNTciPkJpYlRlWCBSZWFkZXI8L3RleHQ+PHBhdGggZD0iTTE5NywxMzUuMjM0NCBMMTg3LDEzNS4yMzQ0IEMxNzIsMTM1LjIzNDQgMTcyLDUwLjc4OTEgMTU3LDUwLjc4OTEgTDE0Nyw1MC43ODkxICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHJlY3QgZmlsbD0iIzAwRkZGRiIgaGVpZ2h0PSIzNi4yOTY5IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjEzNyIgeD0iMTAiIHk9Ijg4LjkzNzUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTciIHg9IjIwIiB5PSIxMTEuOTMyNiI+Q2l0YXRpb24gVHJhY2tlcjwvdGV4dD48cGF0aCBkPSJNMTk3LDEzNS4yMzQ0IEwxODcsMTM1LjIzNDQgQzE3MiwxMzUuMjM0NCAxNzIsMTA3LjA4NTkgMTU3LDEwNy4wODU5IEwxNDcsMTA3LjA4NTkgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cmVjdCBmaWxsPSIjMDBGRkZGIiBoZWlnaHQ9IjM2LjI5NjkiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMTA1IiB4PSI0MiIgeT0iMTQ1LjIzNDQiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4NSIgeD0iNTIiIHk9IjE2OC4yMjk1Ij5BdXRvbWF0aW9uPC90ZXh0PjxwYXRoIGQ9Ik0xOTcsMTM1LjIzNDQgTDE4NywxMzUuMjM0NCBDMTcyLDEzNS4yMzQ0IDE3MiwxNjMuMzgyOCAxNTcsMTYzLjM4MjggTDE0NywxNjMuMzgyOCAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxyZWN0IGZpbGw9IiMwMEZGRkYiIGhlaWdodD0iMzYuMjk2OSIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIxMTYiIHg9IjMxIiB5PSIyMDEuNTMxMyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijk2IiB4PSI0MSIgeT0iMjI0LjUyNjQiPkxvZyBhY3Rpdml0aWVzPC90ZXh0PjxwYXRoIGQ9Ik0xOTcsMTM1LjIzNDQgTDE4NywxMzUuMjM0NCBDMTcyLDEzNS4yMzQ0IDE3MiwyMTkuNjc5NyAxNTcsMjE5LjY3OTcgTDE0NywyMTkuNjc5NyAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9W2Q2Nzk4Nzc2ZDY3Zjc1YTFhOTQ3ZDlhZmE4NzBjZGRhXQpAc3RhcnRtaW5kbWFwCgoKdGl0bGUgIiIKCmhlYWRlcgoKZW5kaGVhZGVyCgoKCgo8c3R5bGU+Cm1pbmRtYXBEaWFncmFtIHsKICAuZ3JlZW4gewogICAgQmFja2dyb3VuZENvbG9yIGxpZ2h0Z3JlZW4KICB9CiAgLnJvc2UgewogICAgQmFja2dyb3VuZENvbG9yICNGRkJCQ0MKICB9Cn0KPC9zdHlsZT4KCiogcmViaWIgPDxncmVlbj4+CgoKCioqWyNjeWFuXTogRW1iZWRkZWQgQmlibGlvZ3JhcGh5IAogIGNvbnZlcnNpb24gdXNpbmcgaW5idWlsdCBwYXJzZXI7CioqWyNjeWFuXSBBZ2dyZWdhdGVkIEJpYmxpb2dyYXBoaWVzCgpsZWZ0IHNpZGUKIAoKKipbI2N5YW5dIEJpYlRlWCBSZWFkZXIKCioqWyNjeWFuXSBDaXRhdGlvbiBUcmFja2VyCgoqKlsjY3lhbl0gQXV0b21hdGlvbgoqKlsjY3lhbl0gTG9nIGFjdGl2aXRpZXMKCkBlbmRtaW5kbWFwCgpQbGFudFVNTCB2ZXJzaW9uIDEuMjAyMi43YmV0YTIoVW5rbm93biBjb21waWxlIHRpbWUpCihHUEwgc291cmNlIGRpc3RyaWJ1dGlvbikKSmF2YSBSdW50aW1lOiBKYXZhKFRNKSBTRSBSdW50aW1lIEVudmlyb25tZW50CkpWTTogSmF2YSBIb3RTcG90KFRNKSA2NC1CaXQgU2VydmVyIFZNCkRlZmF1bHQgRW5jb2Rpbmc6IFVURi04Ckxhbmd1YWdlOiBlbgpDb3VudHJ5OiBVUwotLT48L2c+PC9zdmc+" alt="A mindmap summary for feature set of rebib package" />
+<p class="caption">
+A mindmap summary for feature set of rebib package
+</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

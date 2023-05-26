@@ -1,0 +1,77 @@
+---
+title: "Using rebib with RJarticle"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{use-with-rjarticle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup,echo=FALSE}
+library(rebib)
+```
+
+While using rebib with RJ article LaTeX files one can use the following two options as per their needs :
+
+## 1. Bibliography Constructor
+
+In bibliography construction mode, rebib will check for existing BibTeX files and will convert the embedded bibliography only when there are no 
+linked BibTeX files in the RJ article.
+
+``` latex
+%% typically rebib will search for this line in the RJ article, not the RJwrapper file
+\bibliography{example}
+```
+If there is no linked BibTeX file, rebib will begin its procedure of converting the embedded bibliography to BibTeX and then link it with the article file as well.
+
+### Usage example
+
+```{r prerebibcons, echo=FALSE}
+dir.create(your_article_folder <- file.path(tempdir(), "exampledir"))
+example_files <-  system.file("article", package = "rebib")
+x <- file.copy(from = example_files,to=your_article_folder,recursive = T)
+your_article_path <- paste(your_article_folder,"article",sep="/")
+bib_path <- paste0(your_article_path,"/example.bib")
+x <- file.remove(bib_path)
+```
+
+```{r rebibcons, echo=TRUE}
+# for files without BibTeX source
+rebib::handle_bibliography(your_article_path)
+cat(readLines(paste(your_article_path,"example.bib",sep="/")),sep = "\n")
+```
+
+```{r postrebibcons, echo=FALSE}
+unlink(your_article_folder,recursive = T)
+```
+
+## 2. Bibliography Aggregation
+If you have a BibTeX file and it is missing some references then this mode can help you read the embedded bibliography and combine the two bibliographies in a single BibTeX file.
+
+### Usage example
+
+```{r prebiblioaggr, echo = FALSE}
+dir.create(your_article_folder <- file.path(tempdir(), "exampledir"))
+example_files <-  system.file("aggr_example", package = "rebib")
+x <- file.copy(from = example_files,to=your_article_folder,recursive = T)
+your_article_path <- paste(your_article_folder,"aggr_example",sep="/")
+```
+
+```{r biblioaggr, echo = TRUE}
+# Suppose you have a example.bib file in your article path
+cat(readLines(paste(your_article_path,"example.bib",sep="/")),sep = "\n")
+# for files with BibTeX source as well as embedded entries
+rebib::aggregate_bibliography(xfun::normalize_path(your_article_path))
+cat(readLines(paste(your_article_path,"example.bib",sep="/")),sep = "\n")
+```
+
+```{r postbiblioaggr, echo = FALSE}
+unlink(your_article_folder,recursive = T)
+```
