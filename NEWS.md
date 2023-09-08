@@ -1,13 +1,39 @@
+# version 0.3.2
+
+## bug fixes :
+
+1. Fixed #19 where bib parser would fail to extract identifiers.
+2. Corrected fix #17 to work better.
+
+
+# version 0.3.0
+
+## bug fixes :
+
+1. Fixed #15, where certain articles would fail to aggregate bibliography.
+2. Fixed #17, where writer would add extra newlines.
+3. Updated wrapper tools which work with articles without wrapper as well.
+
+
+# version 0.2.4
+
+## bug fixes : 
+
+1. Fixed a bug where empty lines in the bunch of strings could not be filtered out.
+2. Fixed Issue #14 where the conversion/aggregation would fail in case of one or none bib items.
+3. Updated pkgdown site
+
 # version 0.2.2
 
 ## features updates :  
 
 1. Updated Contributor Details and DESCRIPTION
-2. Getting Ready for CRAN
+2. CRAN Release
 3. Updated LICENSE and added `cph` 
 4. Logging events is now optional and turned off by default.
 
-## bug fixes :  
+## bug fixes : 
+
 1. Corrected usage of `gsub()` for changing extensions with `xfun::with_ext()`. 
 2. Cleaned up documentation and removed un-wanted functions/docs.
 3. Corrected `rebib::citation_reader()` example.
@@ -66,10 +92,13 @@
 1. title field now contains title only
 1. publisher field with remaining info
 2. URL field (enabled if URL exists)
+
 ## bug fixes :
+
 1. fixed stray periods(.) and colons(:) 
 
 # Version 0.0.1
+
 ## Spun off from [texor](https://github.com/Abhi-1U/texor) project
 The decision to do this was based on the fact that the bibliography section 
 in texor package was expanding significantly, enough to have its own

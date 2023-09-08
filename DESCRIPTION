@@ -1,7 +1,7 @@
 Package: rebib
 Type: Package
 Title: Convert and Aggregate Bibliographies
-Version: 0.2.2
+Version: 0.3.2
 Authors@R: 
     c(person(given = "Abhishek",
              family = "Ulayil",
@@ -33,17 +33,17 @@ Description: Authors working with 'LaTeX' articles use the built-in bibliography
     function well with Web articles. As a way out, 'rebib' offers tools to
     convert and combine bibliographies from both sources. 
 License: MIT + file LICENSE
-URL: https://github.com/Abhi-1U/rebib#readme
+URL: https://github.com/Abhi-1U/rebib
 BugReports: https://github.com/Abhi-1U/rebib/issues
 Encoding: UTF-8
-Imports: tools, stringr, logger, xfun
+Imports: tools, stringr, logger, xfun, cli, whisker
 Suggests: knitr, rmarkdown, spelling, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 Language: en-US
 NeedsCompilation: no
-Packaged: 2023-05-26 06:31:08 UTC; abhi
+Packaged: 2023-09-08 19:44:55 UTC; abhi
 Author: Abhishek Ulayil [aut, cre, cph]
     (<https://orcid.org/0009-0000-6935-8690>),
   Heather Turner [ctb] (<https://orcid.org/0000-0002-1256-3375>),
@@ -52,4 +52,4 @@ Author: Abhishek Ulayil [aut, cre, cph]
   Dianne Cook [ctb] (<https://orcid.org/0000-0002-3813-7155>)
 Maintainer: Abhishek Ulayil <perricoq@outlook.com>
 Repository: CRAN
-Date/Publication: 2023-05-26 18:50:02 UTC
+Date/Publication: 2023-09-08 20:10:02 UTC
