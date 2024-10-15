@@ -492,7 +492,7 @@ metadata extracted and will write the corresponding data fields. The
 default entry type is a book, which should not have any problems with
 the web articles.</p>
 <pre><code>#&gt; Warning in file.remove(bib_path): cannot remove file
-#&gt; &#39;/tmp/RtmpsrzBoI/exampledir/article/example.bib&#39;, reason &#39;No such file or
+#&gt; &#39;/tmp/RtmpfSOqVJ/exampledir/article/example.bib&#39;, reason &#39;No such file or
 #&gt; directory&#39;</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>rebib<span class="sc">:::</span><span class="fu">bibtex_writer</span>(bib_entry,file_path)</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(<span class="fu">paste</span>(your_article_path,<span class="st">&quot;example.bib&quot;</span>,<span class="at">sep=</span><span class="st">&quot;/&quot;</span>)),<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>

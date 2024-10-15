@@ -19,8 +19,8 @@ get_texfile_name <- function(article_dir) {
     pre_marker <- wrapper_file[seq_len(article_start)]
     post_marker <- wrapper_file[seq_len(article_start) + 1]
     source_line <- setdiff(post_marker, pre_marker)
-    tex_file <- gsub("[[:space:]]", "",
-                     gsub("\\\\input\\{|\\}", "", source_line))
+    tex_file <- gsub("\\\\input\\{|\\}", "",
+                     gsub("^\\s+|\\s+$", "", source_line))
     if (!grepl(".tex$", tex_file)) {
         tex_file <- paste0(tex_file, ".tex")
     }
@@ -40,8 +40,18 @@ get_bib_file <- function(article_dir, file_name) {
     article_dir <- xfun::normalize_path(article_dir)
     file_list <- list.files(article_dir, recursive = FALSE)
     extensions <- c("*.bib$")
-    linked_bib <- toString(paste(tools::file_path_sans_ext(file_name),
-                                 ".bib", sep = ""))
+    src_file_data <- readLines(file.path(article_dir, file_name))
+    linked_bib <- ""
+    for (line in src_file_data) {
+        if (grepl("\\\\bibliography\\{", line)) {
+            linked_bib <- gsub("\\\\bibliography\\{|\\}", "", line)
+            linked_bib <- gsub("^\\s+|\\s+$", "", linked_bib)
+            if (!grepl(".bib$", linked_bib)) {
+                linked_bib <- paste0(linked_bib, ".bib")
+            }
+            break
+        }
+    }
     bib_file <- unique(grep(paste(extensions, collapse = "|"),
                             file_list, value = TRUE))
     if (identical(bib_file, character(0))) {

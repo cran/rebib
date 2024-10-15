@@ -348,9 +348,9 @@ two options as per their needs :</p>
 as a path. This way, one can generate BibTeX from the embedded
 bibliography or BBL file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>rebib<span class="sc">::</span><span class="fu">biblio_converter</span>(path_to_your_file)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; working directory : /tmp/RtmpsrzBoI/exampledir/standalone</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; working directory : /tmp/RtmpfSOqVJ/exampledir/standalone</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; bib entries : 6</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; Written BibTeX file : /tmp/RtmpsrzBoI/exampledir/standalone/sample.bib</span></span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; Written BibTeX file : /tmp/RtmpfSOqVJ/exampledir/standalone/sample.bib</span></span></code></pre></div>
 </div>
 <div id="bibliography-aggregator" class="section level2">
 <h2>2. Bibliography Aggregator</h2>
@@ -364,7 +364,7 @@ A Flow chart of Bibliography Aggregation
 </p>
 </div>
 <pre><code>#&gt; Warning in dir.create(your_article_folder &lt;- file.path(tempdir(),
-#&gt; &quot;exampledir&quot;)): &#39;/tmp/RtmpsrzBoI/exampledir&#39; already exists</code></pre>
+#&gt; &quot;exampledir&quot;)): &#39;/tmp/RtmpfSOqVJ/exampledir&#39; already exists</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Suppose you have a example.bib file in your article path</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">readLines</span>(<span class="fu">paste</span>(your_article_path,<span class="st">&quot;example.bib&quot;</span>,<span class="at">sep=</span><span class="st">&quot;/&quot;</span>)),<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; @book{ihaka:1996,</span></span>

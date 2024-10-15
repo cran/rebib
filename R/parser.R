@@ -16,13 +16,55 @@ bibliography_parser <- function(single_bib_data) {
     }
     # starting with unique identifier
     mini_iter_stop <- which(grepl("\\\\newblock", single_bib_data))[1]
-    for (line in which(grepl("\\}$", single_bib_data[1:(mini_iter_stop-1)]))){
-        if (line == which(grepl("]\\{", single_bib_data))[1]) {
-            start_idx <- which(grepl("^\\s*\\\\bibitem\\[", single_bib_data))
-            z <- str_split(single_bib_data[line],"]\\{")[[1]]
-            bib_record$unique_id <- gsub("\\}","",z[length(z)])
-            author_start <- line + 1
-            break
+    if (is.na(mini_iter_stop)) {
+        # if there is no new block, we can't parse the data
+
+        concat_lines <- function(single_bib_data) {
+            trimmed_lines <- stringr::str_trim(single_bib_data)
+            concatenated <- paste(stringr::str_trim(trimmed_lines), collapse = " ")
+            return(concatenated)
+        }
+        bib_data_str <- concat_lines(single_bib_data)
+
+        # get unique_id in \bibitem{unique_id}
+        bib_record$unique_id <- stringr::str_match(bib_data_str,
+                                          "\\\\bibitem(?:\\[[^\\]]*\\])?\\{([^\\}]+)\\}")[2]
+        bib_record$unique_id <- stringr::str_trim(bib_record$unique_id)
+
+        bib_record$author <- stringr::str_match(bib_data_str,
+                                        "\\}(.+)\\\\emph\\{")[2]
+        bib_record$author <- stringr::str_trim(bib_record$author)
+        bib_record$author <- gsub("[.,]+$", "", bib_record$author)
+
+
+        bib_record$title <- stringr::str_match(bib_data_str,
+                                      "\\\\emph\\{([^\\}]+?)\\}")[2]
+        bib_record$title <- stringr::str_trim(bib_record$title)
+
+        rest_bib_data <- stringr::str_match(bib_data_str,
+                                   "\\\\emph\\{[^\\}]+\\}(.+)")[2]
+
+        bib_record$year <- stringr::str_match(rest_bib_data, "([0-9]{4})")[2]
+        rest_bib_data <- stringr::str_match(bib_data_str,
+                                   "\\\\emph\\{[^\\}]+\\}(.+)")[2]
+
+        # put all the remaining data in journal
+        rest_bib_data <- gsub(bib_record$year, "", rest_bib_data)
+        rest_bib_data <- stringr::str_trim(rest_bib_data)
+        rest_bib_data <- gsub("^[ ,.]+", "", rest_bib_data)
+        rest_bib_data <- gsub("[ ,.]+$", "", rest_bib_data)
+        bib_record$journal <- stringr::str_trim(rest_bib_data)
+
+        return(bib_record)
+    } else{
+        for (line in which(grepl("\\}$", single_bib_data[1:(mini_iter_stop-1)]))){
+            if (line == which(grepl("]\\{", single_bib_data))[1]) {
+                start_idx <- which(grepl("^\\s*\\\\bibitem", single_bib_data))
+                z <- str_split(single_bib_data[line],"]\\{")[[1]]
+                bib_record$unique_id <- gsub("\\}","",z[length(z)])
+                author_start <- line + 1
+                break
+            }
         }
     }
     bib_record$unique_id <- gsub("\\}","",z[length(z)])
